@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3745740625737147510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3876621016352779356}
+  - component: {fileID: 2291004581070627676}
+  m_Layer: 0
+  m_Name: Grouping
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3876621016352779356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745740625737147510}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.1347866, y: 3.4941854, z: -2.9708672}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2291004581070627676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3745740625737147510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61705c301678cb944b3bc0d323efb1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs: []
+  addButton: {fileID: 0}
+  selectbox: {fileID: 0}
+  removeButton: {fileID: 0}
+  creation: {fileID: 0}
+  bodycreation: {fileID: 0}
+  settings: {fileID: 0}
+  holded: []
+  GroupHolder: {fileID: 0}
+  resize: {fileID: 0}
+  groupholdercopy: {fileID: 0}
+  selectedSlot: 0
+  selected: []
+  origspot: {x: 0, y: 0}
+  othercorner: {x: 0, y: 0}
+  prefabButton: {fileID: 1907794023843999370, guid: a9a6be901f43e7e4d9c9d35372e38dda, type: 3}
+  currentPrefabButton: {fileID: 0}
+  prefabList: {fileID: 0}
