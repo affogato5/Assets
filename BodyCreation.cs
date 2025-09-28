@@ -344,6 +344,7 @@ public class BodyCreation : MonoBehaviour
 
                                     print("addedmotor3");
                                     motors.Add(adjacent);
+                                    body.Add(adjacent);
 
 
                                     break;

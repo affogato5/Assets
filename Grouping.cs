@@ -131,7 +131,7 @@ public class Grouping : MonoBehaviour
                 holder.GetComponent<ListStorage>().storage.Add(((((((((((((((((motor)))))))))))))))));
                 //turningMotor.GetComponentInChildren<GameObjectStorage>().storage = holder;
 
-                turningMotor.transform.GetChild(0).gameObject.GetComponent<GameObjectStorage>().storage = holder;
+                turningMotor.transform.Find("Cube").gameObject.GetComponent<GameObjectStorage>().storage = holder;
             }
         }
         if (turningMotor != null)
@@ -306,9 +306,10 @@ public class Grouping : MonoBehaviour
             }
 
 
-            if (settings.MoveOn == true | settings.ResizeOn == true)
+            if ((settings.MoveOn == true | settings.ResizeOn == true) && GroupHolder == holder)
             {
                 print("This handley");
+                
 
                 resize.HandleCreator(holder);
             }
