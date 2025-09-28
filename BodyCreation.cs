@@ -21,6 +21,22 @@ public class BodyCreation : MonoBehaviour
     {
 
     };
+
+    public List<GameObject> usedUpBlocks = new List<GameObject>
+    {
+
+    };
+
+
+    public List<List<GameObject>> motorsList = new List<List<GameObject>>
+    {
+
+    };
+
+    public List<GameObject> turningMotorList = new List<GameObject>
+    {
+
+    };
     public List<GameObject> bodyParts = new List<GameObject>
     {
 
@@ -210,8 +226,18 @@ public class BodyCreation : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
 
-            if (block.transform.parent == null)
+            if (block.GetComponent<ElectronicType>())
             {
+                if (block.GetComponent<ElectronicType>().type == "Motor")
+                {
+
+                    continue;
+                }
+            }
+            
+            if (!usedUpBlocks.Contains(block))
+            {
+                print("oia1");
                 yield return createBody(block);
             }
         }
@@ -227,6 +253,25 @@ public class BodyCreation : MonoBehaviour
                 bodyPart.transform.SetParent(turningMotor.transform.GetChild(0).gameObject.GetComponent<GameObjectStorage>().storage.transform);
             }
         }
+
+        for (int i = 0; i < bodies.Count; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            print("coiunt greater");
+            int bodiesIndex = i + 1;
+            grouping.HolderCreator(bodies[i], motorsList[i], turningMotorList[i], true);
+
+            GameObject ConfiguredPanel = Instantiate(BodyButtonCopy.gameObject);
+            ConfiguredPanel.GetComponent<NumberStorage>().storage = bodiesIndex;
+            //BodyButtonCopy.GetComponentInChildren<UnityEngine.UI.Text>().text = ("Body " + bodiesIndex);
+
+            GameObject textObject = ConfiguredPanel.transform.GetChild(0).gameObject;
+            textObject.GetComponent<TMP_Text>().text = "Body " + bodiesIndex;
+
+            ConfiguredPanel.transform.parent = BodiesContent.transform;
+        }
+        
     }
 
     motorDirection MotorFacing(GameObject motor, GameObject block)
@@ -254,7 +299,7 @@ public class BodyCreation : MonoBehaviour
             }
         }
 
-        print("WOMP WOMP!!" + block.GetComponent<NumberStorage>().storage);
+        print("WOMP WOMP!!");
 
         return motorDirection.NOT_FACING;
     }
@@ -285,6 +330,7 @@ public class BodyCreation : MonoBehaviour
     }
     IEnumerator createBody(GameObject origin)
     {
+                        print("oia2");
         GameObject turningMotor = null;
 
         List<GameObject> motors = new List<GameObject>
@@ -330,7 +376,7 @@ public class BodyCreation : MonoBehaviour
                     if (adjacent.GetComponent<ElectronicType>())
                     {
                         if (adjacent.GetComponent<ElectronicType>().type == "Motor")
-                        {
+                        {  
                             print("addedmotor-1");
                             switch (MotorFacing(adjacent, queue[0]))
                             {
@@ -345,8 +391,6 @@ public class BodyCreation : MonoBehaviour
                                     print("addedmotor3");
                                     motors.Add(adjacent);
                                     body.Add(adjacent);
-
-
                                     break;
                             }
                         }
@@ -373,19 +417,13 @@ public class BodyCreation : MonoBehaviour
 
         if (body.Count() > 1)
         {
-            print("coiunt greater");
-            grouping.HolderCreator(body, motors, turningMotor, true);
-            int bodiesIndex = bodies.Count();
             bodies.Add(new List<GameObject>(body));
-
-            GameObject ConfiguredPanel = Instantiate(BodyButtonCopy.gameObject);
-            ConfiguredPanel.GetComponent<NumberStorage>().storage = bodiesIndex;
-            //BodyButtonCopy.GetComponentInChildren<UnityEngine.UI.Text>().text = ("Body " + bodiesIndex);
-
-            GameObject textObject = ConfiguredPanel.transform.GetChild(0).gameObject;
-            textObject.GetComponent<TMP_Text>().text = "Body " + bodiesIndex;
-
-            ConfiguredPanel.transform.parent = BodiesContent.transform;
+            motorsList.Add(new List<GameObject>(motors));
+            turningMotorList.Add(turningMotor);
+            foreach (GameObject usedupBlock in body)
+            {
+                usedUpBlocks.Add(usedupBlock);
+            }
         }
 
 

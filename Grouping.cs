@@ -131,7 +131,8 @@ public class Grouping : MonoBehaviour
                 holder.GetComponent<ListStorage>().storage.Add(((((((((((((((((motor)))))))))))))))));
                 //turningMotor.GetComponentInChildren<GameObjectStorage>().storage = holder;
 
-                turningMotor.transform.Find("Cube").gameObject.GetComponent<GameObjectStorage>().storage = holder;
+                GameObject cube = motor.transform.Find("Cube").gameObject;
+                cube.GetComponent<GameObjectStorage>().storage = holder;
             }
         }
         if (turningMotor != null)
@@ -177,25 +178,25 @@ public class Grouping : MonoBehaviour
                 }
                 else
                 {
-                    if (selec.transform.position.x - (selec.GetComponent<MeshRenderer>().bounds.size.x * 0.5) < holder.transform.position.x - (holder.transform.localScale.x * 0.5))
+                    if (selec.transform.position.x - (selec.GetComponent<BoxCollider>().bounds.size.x * 0.5) < holder.transform.position.x - (holder.transform.localScale.x * 0.5))
                     {
                         holder.transform.localScale = new Vector3(holder.transform.localScale.x + Mathf.Abs(holder.transform.position.x - selec.transform.position.x), holder.transform.localScale.y, holder.transform.localScale.z);
                         leftestX = selec;
                     }
-                    if (selec.transform.position.x + (selec.GetComponent<MeshRenderer>().bounds.size.x * 0.5) > holder.transform.position.x + (holder.transform.localScale.x * 0.5))
+                    if (selec.transform.position.x + (selec.GetComponent<BoxCollider>().bounds.size.x * 0.5) > holder.transform.position.x + (holder.transform.localScale.x * 0.5))
                     {
                         holder.transform.localScale = new Vector3(holder.transform.localScale.x + Mathf.Abs(holder.transform.position.x - selec.transform.position.x), holder.transform.localScale.y, holder.transform.localScale.z);
                         rightestX = selec;
                     }
 
                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    if (selec.transform.position.y - (selec.GetComponent<MeshRenderer>().bounds.size.y * 0.5) < holder.transform.position.y - (holder.transform.localScale.y * 0.5))
+                    if (selec.transform.position.y - (selec.GetComponent<BoxCollider>().bounds.size.y * 0.5) < holder.transform.position.y - (holder.transform.localScale.y * 0.5))
                     {
                         holder.transform.localScale = new Vector3(holder.transform.localScale.x, holder.transform.localScale.y + Mathf.Abs(holder.transform.position.y - selec.transform.position.y), holder.transform.localScale.z);
                         leftestY = selec;
 
                     }
-                    if (selec.transform.position.y + (selec.GetComponent<MeshRenderer>().bounds.size.y * 0.5) > holder.transform.position.y + (holder.transform.localScale.y * 0.5))
+                    if (selec.transform.position.y + (selec.GetComponent<BoxCollider>().bounds.size.y * 0.5) > holder.transform.position.y + (holder.transform.localScale.y * 0.5))
                     {
                         holder.transform.localScale = new Vector3(holder.transform.localScale.x, holder.transform.localScale.y + Mathf.Abs(holder.transform.position.y - selec.transform.position.y), holder.transform.localScale.z);
                         rightestY = selec;
@@ -203,13 +204,13 @@ public class Grouping : MonoBehaviour
                     }
 
                     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    if (selec.transform.position.z - (selec.GetComponent<MeshRenderer>().bounds.size.z * 0.5) < holder.transform.position.z - (holder.transform.localScale.z * 0.5))
+                    if (selec.transform.position.z - (selec.GetComponent<BoxCollider>().bounds.size.z * 0.5) < holder.transform.position.z - (holder.transform.localScale.z * 0.5))
                     {
                         holder.transform.localScale = new Vector3(holder.transform.localScale.x, holder.transform.localScale.y, holder.transform.localScale.z + Mathf.Abs(holder.transform.position.z - selec.transform.position.z));
                         leftestZ = selec;
 
                     }
-                    if (selec.transform.position.z + (selec.GetComponent<MeshRenderer>().bounds.size.z * 0.5) > holder.transform.position.z + (holder.transform.localScale.z * 0.5))
+                    if (selec.transform.position.z + (selec.GetComponent<BoxCollider>().bounds.size.z * 0.5) > holder.transform.position.z + (holder.transform.localScale.z * 0.5))
                     {
                         holder.transform.localScale = new Vector3(holder.transform.localScale.x, holder.transform.localScale.y, holder.transform.localScale.z + Mathf.Abs(holder.transform.position.z - selec.transform.position.z));
                         rightestZ = selec;
