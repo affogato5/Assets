@@ -48,13 +48,13 @@ public class Thruster : ElectronicBase
                 {
 
                     Power = Power - 1f;
-                    fullBody.transform.position = fullBody.transform.position + Block.transform.forward * 0.05f;
-                    fullBody.transform.Rotate(0, Block.transform.localPosition.x, 0);
+                    fullBody.transform.position = fullBody.transform.position + Block.transform.forward * 0.15f;
+                    fullBody.transform.Rotate(0, -Block.transform.localPosition.x, 0);
                 }
             
         }
 
-        Orb.transform.position = Block.transform.position + Block.transform.up + Block.transform.up * (Power + 1) * 0.1f;
+        Orb.transform.position = Block.transform.position + Block.transform.up + Block.transform.up * (Power + 1) * 0.5f;
 
 
         return true;

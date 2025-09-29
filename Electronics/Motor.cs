@@ -22,7 +22,7 @@ public class Motor : ElectronicBase
             if (fullBody != null)
             {
                 Power = Power - 1f;
-                fullBody.transform.RotateAround(Block.transform.position, Block.transform.forward, 1);
+                fullBody.transform.RotateAround(Block.transform.position, Block.transform.forward, 3);
             }
             
         }

@@ -52,10 +52,10 @@ public class BodyCreation : MonoBehaviour
     {
         Vector3 position = block.transform.position;
 
-        float fullX = block.GetComponent<BoxCollider>().size.x;
+        float fullX = block.GetComponent<BoxCollider>().bounds.size.x;
 
-        float fullY = block.GetComponent<BoxCollider>().size.y;
-        float fullZ = block.GetComponent<BoxCollider>().size.z;
+        float fullY = block.GetComponent<BoxCollider>().bounds.size.y;
+        float fullZ = block.GetComponent<BoxCollider>().bounds.size.z;
 
 
 
@@ -72,25 +72,33 @@ public class BodyCreation : MonoBehaviour
 
         List<GameObject> adjacents = new List<GameObject>();
 
-        float startingX = position.x - (fullX / 2) - 0.5f;
-        float endingX = position.x + (fullX / 2) + 0.5f;
+        float startingX = position.x - (fullX / 2) + 0.5f;
+        float endingX = position.x + (fullX / 2) - 0.5f;
 
 
-        float startingY = position.y - (fullY / 2) - 0.5f;
-        float endingY = position.y + (fullY / 2) + 0.5f;
+        float startingY = position.y - (fullY / 2) + 0.5f;
+        float endingY = position.y + (fullY / 2) - 0.5f;
 
-        float startingZ = position.z - (fullZ / 2) - 0.5f;
-        float endingZ = position.z + (fullZ / 2) + 0.5f;
+        float startingZ = position.z - (fullZ / 2) + 0.5f;
+        float endingZ = position.z + (fullZ / 2) - 0.5f;
 
 
-        for (float zi = startingZ + 1f; zi < endingZ; zi++)
+        float zi = startingZ - 1f;
+        do
         {
-            for (float xi = startingX + 1f; xi < endingX; xi++)
+            zi++;
+            float xi = startingX - 1f;
+            do
             {
-                Vector3 checkedPosition1 = new Vector3(xi, startingY, zi);
-                Vector3 checkedPosition2 = new Vector3(xi, endingY, zi);
-
-               
+                xi++;
+                Vector3 checkedPosition1 = new Vector3(xi, startingY - 1f, zi);
+                Vector3 checkedPosition2 = new Vector3(xi, endingY + 1f, zi);
+                /*
+                GameObject zoi = Instantiate(grouping.groupholdercopy);
+                zoi.transform.position = checkedPosition1;
+                GameObject zoi2 = Instantiate(grouping.groupholdercopy);
+                zoi2.transform.position = checkedPosition2;
+                */
 
                 print("X CHECKEDPOSITION1:" + checkedPosition1 + position);
                 print("X CHECKEDPOSITION2:" + checkedPosition2 + position);
@@ -123,12 +131,21 @@ public class BodyCreation : MonoBehaviour
                 }
 
             }
-            for (float yi = startingY + 1f; yi < endingY; yi++)
-            {
-                Vector3 checkedPosition1 = new Vector3(startingX, yi, zi);
-                Vector3 checkedPosition2 = new Vector3(endingX, yi, zi);
+            while (xi <= endingX - 1f);
 
-           
+            float yi = startingY - 1f;
+            do
+            {
+                yi++;
+                Vector3 checkedPosition1 = new Vector3(startingX - 1f, yi, zi);
+                Vector3 checkedPosition2 = new Vector3(endingX + 1f, yi, zi);
+
+                /*
+                GameObject zoi = Instantiate(grouping.groupholdercopy);
+                zoi.transform.position = checkedPosition1;
+                GameObject zoi2 = Instantiate(grouping.groupholdercopy);
+                zoi2.transform.position = checkedPosition2;
+                */
 
                 print("Y CHECKEDPOSITION1:" + checkedPosition1 + position);
                 print("Y CHECKEDPOSITION2:" + checkedPosition2 + position);
@@ -158,17 +175,28 @@ public class BodyCreation : MonoBehaviour
                     //block.GetComponent<ListStorage>().storage.Add(intersecting2[0].gameObject);
                 }
             }
+            while (yi <= endingY - 1f);
         }
+        while (zi <= endingZ - 1f);
 
 
-        for (float xi = startingX + 1f; xi < endingX; xi++)
+        float xi2 = startingX - 1f;
+        do
         {
-            for (float yi = startingY + 1f; yi < endingY; yi++)
+            xi2++;
+            float yi = startingY - 1f;
+            do
             {
-                Vector3 checkedPosition1 = new Vector3(xi, yi, startingZ);
-                Vector3 checkedPosition2 = new Vector3(xi, yi, endingZ);
+                yi++;
+                Vector3 checkedPosition1 = new Vector3(xi2, yi, startingZ - 1f);
+                Vector3 checkedPosition2 = new Vector3(xi2, yi, endingZ + 1f);
 
-
+                /*
+                GameObject zoi = Instantiate(grouping.groupholdercopy);
+                zoi.transform.position = checkedPosition1;
+                GameObject zoi2 = Instantiate(grouping.groupholdercopy);
+                zoi2.transform.position = checkedPosition2;
+                */
 
                 print("X CHECKEDPOSITION1:" + checkedPosition1 + position);
                 print("X CHECKEDPOSITION2:" + checkedPosition2 + position);
@@ -201,7 +229,9 @@ public class BodyCreation : MonoBehaviour
                 }
 
             }
+            while (yi <= endingY - 1f);
         }
+        while (xi2 <= endingX - 1f);
 
         //for (int i = 0; i < 7; i++)
         //{
@@ -324,6 +354,7 @@ public class BodyCreation : MonoBehaviour
         bodyParts.Clear();
         bodies.Clear();
         motorsList.Clear();
+        usedUpBlocks.Clear();
         turningMotorList.Clear();
 
         //foreach (List<GameObject> body in bodies)
