@@ -9428,6 +9428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51539232682692a41acfcf66b9b68f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colordestroy: {fileID: 1167345259}
   tobecopied: {fileID: 0}
   list:
   - {fileID: 1624165946}

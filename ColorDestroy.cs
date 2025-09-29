@@ -28,21 +28,36 @@ public class ColorDestroy : MonoBehaviour
 
     IEnumerator Colorize(GameObject coloredobject)
     {
-        Color objcolor = coloredobject.GetComponent<Renderer>().material.color;
+
+        GameObject newColoredObject = coloredobject;
+        if (coloredobject.GetComponent<MeshRenderer>() == null)
+        {
+            newColoredObject = coloredobject.transform.Find("Cube").gameObject;
+        }
+
+        Color objcolor = newColoredObject.GetComponent<MeshRenderer>().material.color;
         print(objcolor + "objcolor");
 
-        Color Colou2r = new Color(Colour.r, Colour.g, Colour.b);
+        Color newColour = Colour;
+        Color Colou2r = new Color(newColour.r, newColour.g, newColour.b);
 
         Vector3 martini = new Vector3(Colou2r.r - objcolor.r, Colou2r.g - objcolor.g, Colou2r.b - objcolor.b);
         
 
-        while (martini.magnitude > 0.2)
+
+        Material myNewMaterial = new Material(Shader.Find("Standard"));
+        newColoredObject.GetComponent<MeshRenderer>().material = myNewMaterial;
+
+
+        int count = 0;
+        while (martini.magnitude > 0.2 && count < 20)
         {
+            count += 1;
             yield return new WaitForSeconds(0.1f);
             martini = new Vector3(Colou2r.r - objcolor.r, Colou2r.g - objcolor.g, Colou2r.b - objcolor.b);
-            coloredobject.GetComponent<Renderer>().material.color = Color.Lerp(coloredobject.GetComponent<Renderer>().material.color, Colour, 0.5f);
+            newColoredObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(newColoredObject.GetComponent<MeshRenderer>().material.color, Colou2r, 0.5f);
         }
-        coloredobject.GetComponent<Renderer>().material.color = Colou2r;
+        newColoredObject.GetComponent<MeshRenderer>().material.color = Colou2r;
     }
 
     public void ColorChange(UnityEngine.UI.Slider slider)

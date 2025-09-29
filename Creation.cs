@@ -86,8 +86,19 @@ public class Creation : MonoBehaviour
                 everyObject.Add(part.gameObject);
             }
         }
+        
+
+        GameObject coloredObject = pendingObject;
+        if (pendingObject.GetComponent<MeshRenderer>() == null)
+        {
+            coloredObject = pendingObject.transform.Find("Cube").gameObject;
+        }
+
+        Material myNewMaterial = new Material(Shader.Find("Standard"));
+        coloredObject.GetComponent<MeshRenderer>().material = myNewMaterial;
         Color newColor = colordestroy.Colour;
-        pendingObject.GetComponent<Renderer>().material.color = new Color(newColor.r, newColor.g, newColor.b);
+        coloredObject.GetComponent<MeshRenderer>().material.color = new Color(newColor.r, newColor.g, newColor.b);
+
         if (count == 0)
         {
             pendingObject.layer = LayerMask.NameToLayer("pendingObject");
@@ -97,7 +108,7 @@ public class Creation : MonoBehaviour
         {
             pendingObject.tag = "prefab";
             pendingObject.layer = LayerMask.NameToLayer("pendingObject");
-            pendingObject.SetActive(true); 
+            pendingObject.SetActive(true);
             grouping.GroupHolder = pendingObject;
         }
 
