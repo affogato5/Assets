@@ -10,6 +10,7 @@ public class BodyCreation : MonoBehaviour
 
     public Creation creation;
 
+
     public Grouping grouping;
 
 
@@ -90,12 +91,7 @@ public class BodyCreation : MonoBehaviour
                 Vector3 checkedPosition1 = new Vector3(xi, startingY, zi);
                 Vector3 checkedPosition2 = new Vector3(xi, endingY, zi);
 
-                GameObject newOrb = Instantiate(grouping.groupholdercopy);
-                newOrb.transform.position = checkedPosition1;
-                newOrb.name = "zoi";
-                GameObject newOrb2 = Instantiate(grouping.groupholdercopy);
-                newOrb2.transform.position = checkedPosition2;
-                newOrb2.name = "zoi";
+               
 
                 print("X CHECKEDPOSITION1:" + checkedPosition1 + position);
                 print("X CHECKEDPOSITION2:" + checkedPosition2 + position);
@@ -133,12 +129,7 @@ public class BodyCreation : MonoBehaviour
                 Vector3 checkedPosition1 = new Vector3(startingX, yi, zi);
                 Vector3 checkedPosition2 = new Vector3(endingX, yi, zi);
 
-                GameObject newOrb = Instantiate(grouping.groupholdercopy);
-                newOrb.transform.position = checkedPosition1;
-                newOrb.name = "zoi";
-                GameObject newOrb2 = Instantiate(grouping.groupholdercopy);
-                newOrb2.transform.position = checkedPosition2;
-                newOrb2.name = "zoi";
+           
 
                 print("Y CHECKEDPOSITION1:" + checkedPosition1 + position);
                 print("Y CHECKEDPOSITION2:" + checkedPosition2 + position);
@@ -178,12 +169,7 @@ public class BodyCreation : MonoBehaviour
                 Vector3 checkedPosition1 = new Vector3(xi, yi, startingZ);
                 Vector3 checkedPosition2 = new Vector3(xi, yi, endingZ);
 
-                GameObject newOrb = Instantiate(grouping.groupholdercopy);
-                newOrb.transform.position = checkedPosition1;
-                newOrb.name = "zoi";
-                GameObject newOrb2 = Instantiate(grouping.groupholdercopy);
-                newOrb2.transform.position = checkedPosition2;
-                newOrb2.name = "zoi";
+
 
                 print("X CHECKEDPOSITION1:" + checkedPosition1 + position);
                 print("X CHECKEDPOSITION2:" + checkedPosition2 + position);

@@ -22,7 +22,7 @@ public class ElectronicBase
     public virtual bool Action()
     {
         DistributePower();
-        Orb.transform.position = Block.transform.position + Block.transform.up * (Power + 1);
+        Orb.transform.position = Block.transform.position + Block.transform.up + Block.transform.up * (Power + 1) * 0.1f;
         return true;
     }
     public virtual bool CheckCondition()

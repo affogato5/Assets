@@ -12,6 +12,7 @@ public class NButton : ElectronicBase
             SetTruePower(10f);
         }
         DistributePower();
+        Orb.transform.position = Block.transform.position + Block.transform.up + Block.transform.up * (Power + 1) * 0.1f;
         
         return true;
     }
@@ -28,7 +29,7 @@ public class NButton : ElectronicBase
 
         Power = pendingPower;
         pendingPower = 0f;
-        
+
         return true;
     }
 }

@@ -31,33 +31,38 @@ public class Wiring : MonoBehaviour
         Collider[] intersecting = Physics.OverlapSphere(forward, 0.01f);
         if (intersecting.Length > 0)
         {
-            if (intersecting[0].gameObject != electronicBlock)
+            GameObject intersector = intersecting[0].gameObject;
+            if (intersector.name == "GroupHolder")
             {
-                electronicBlock.GetComponent<GameObjectStorage>().storage = intersecting[0].gameObject;
-                addBlock(intersecting[0].gameObject);
-                listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].connections[0] = listOfParts[intersecting[0].gameObject.GetComponent<NumberStorage>().storage];
-
-
-                switch (intersecting[0].gameObject.GetComponent<ElectronicType>().type)
-                {
-                    case "Motor":
-                        break;
-                    case "Thruster":
-                        break;
-                    default:
-                        if (recursive == true)
-                        {
-                            getConnection(intersecting[0].gameObject, true);
-                        }
-                        break;
-                }
-                //if (listOfParts[intersecting[0].gameObject.GetComponent<NumberStorage>().storage].propagate == "YES")
-                //        {
-                //            addBlock(intersecting[0].gameObject);
-                //        }
-
-                
+                intersector = intersecting[1].gameObject; 
             }
+            if (intersector != electronicBlock)
+                {
+                    electronicBlock.GetComponent<GameObjectStorage>().storage = intersector;
+                    addBlock(intersector);
+                    listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].connections[0] = listOfParts[intersector.GetComponent<NumberStorage>().storage];
+
+
+                    switch (intersector.GetComponent<ElectronicType>().type)
+                    {
+                        case "Motor":
+                            break;
+                        case "Thruster":
+                            break;
+                        default:
+                            if (recursive == true)
+                            {
+                                getConnection(intersector, true);
+                            }
+                            break;
+                    }
+                    //if (listOfParts[intersecting[0].gameObject.GetComponent<NumberStorage>().storage].propagate == "YES")
+                    //        {
+                    //            addBlock(intersecting[0].gameObject);
+                    //        }
+
+
+                }
         }
 
     }

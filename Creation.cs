@@ -11,6 +11,8 @@ public class Creation : MonoBehaviour
 
     }
 
+    public ColorDestroy colordestroy;
+
     public GameObject tobecopied;
 
     //public List<GameObject> selected;
@@ -84,7 +86,8 @@ public class Creation : MonoBehaviour
                 everyObject.Add(part.gameObject);
             }
         }
-        //pendingObject.GetComponent<Renderer>().material.color = Colour;
+        Color newColor = colordestroy.Colour;
+        pendingObject.GetComponent<Renderer>().material.color = new Color(newColor.r, newColor.g, newColor.b);
         if (count == 0)
         {
             pendingObject.layer = LayerMask.NameToLayer("pendingObject");
@@ -223,7 +226,6 @@ public class Creation : MonoBehaviour
 
         StartCoroutine(Plean(original, pendingObject, originalPosition));
 
-        
 
         //else
         //{

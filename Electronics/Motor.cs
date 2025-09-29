@@ -13,20 +13,29 @@ public class Motor : ElectronicBase
     }
     public override bool Action()
     {
-        if (Power > 1f)
+        Power += pendingPower;
+        pendingPower = 0f;
+
+        if (Power > 0f)
         {
             GameObject fullBody = Block.GetComponent<GameObjectStorage>().storage;
             if (fullBody != null)
             {
-                fullBody.transform.RotateAround(Block.transform.position, Vector3.up, 2 * Time.deltaTime);
+                Power = Power - 1f;
+                fullBody.transform.RotateAround(Block.transform.position, Block.transform.forward, 1);
             }
+            
         }
+
+        Orb.transform.position = Block.transform.position + Block.transform.up + Block.transform.up * (Power + 1) * 0.1f;
+
+
         return true;
     }
     public override bool DistributePower()
     {
-        SetPower(0f);
-        connections[0].AddPower(1);
+    
+
         return true;
     }
 }
