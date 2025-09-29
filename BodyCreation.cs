@@ -72,33 +72,40 @@ public class BodyCreation : MonoBehaviour
 
         List<GameObject> adjacents = new List<GameObject>();
 
-        float startingX = position.x - (fullX / 2) + 0.5f;
-        float endingX = position.x + (fullX / 2) - 0.5f;
+        float startingX = position.x - (fullX / 2) - 0.5f;
+        float endingX = position.x + (fullX / 2) + 0.5f;
 
 
-        float startingY = position.y - (fullY / 2) + 0.5f;
-        float endingY = position.y + (fullY / 2) - 0.5f;
+        float startingY = position.y - (fullY / 2) - 0.5f;
+        float endingY = position.y + (fullY / 2) + 0.5f;
 
-        float startingZ = position.z - (fullZ / 2) + 0.5f;
-        float endingZ = position.z + (fullZ / 2) - 0.5f;
+        float startingZ = position.z - (fullZ / 2) - 0.5f;
+        float endingZ = position.z + (fullZ / 2) + 0.5f;
 
 
-        for (float zi = startingZ; zi <= endingZ + 1f; zi++)
+        for (float zi = startingZ + 1f; zi < endingZ; zi++)
         {
-            for (float xi = startingX; xi <= endingX + 1f; xi++)
+            for (float xi = startingX + 1f; xi < endingX; xi++)
             {
                 Vector3 checkedPosition1 = new Vector3(xi, startingY, zi);
                 Vector3 checkedPosition2 = new Vector3(xi, endingY, zi);
 
-                print("X CHECKEDPOSITION1:" + checkedPosition1);
-                print("X CHECKEDPOSITION2:" + checkedPosition2);
+                GameObject newOrb = Instantiate(grouping.groupholdercopy);
+                newOrb.transform.position = checkedPosition1;
+                newOrb.name = "zoi";
+                GameObject newOrb2 = Instantiate(grouping.groupholdercopy);
+                newOrb2.transform.position = checkedPosition2;
+                newOrb2.name = "zoi";
+
+                print("X CHECKEDPOSITION1:" + checkedPosition1 + position);
+                print("X CHECKEDPOSITION2:" + checkedPosition2 + position);
 
                 Collider[] intersecting = Physics.OverlapSphere(checkedPosition1, 0.01f);
 
                 if (intersecting.Length > 0)
                 {
                     print("FOUND ADJ");
-                    if (!adjacents.Contains(intersecting[0].gameObject) && intersecting[0].gameObject.tag == "Default")
+                    if (!adjacents.Contains(intersecting[0].gameObject))
                     {
                         adjacents.Add(intersecting[0].gameObject);
                     }
@@ -121,13 +128,20 @@ public class BodyCreation : MonoBehaviour
                 }
 
             }
-            for (float yi = startingY; yi <= endingY + 1f; yi++)
+            for (float yi = startingY + 1f; yi < endingY; yi++)
             {
                 Vector3 checkedPosition1 = new Vector3(startingX, yi, zi);
                 Vector3 checkedPosition2 = new Vector3(endingX, yi, zi);
 
-                print("Y CHECKEDPOSITION1:" + checkedPosition1);
-                print("Y CHECKEDPOSITION2:" + checkedPosition2);
+                GameObject newOrb = Instantiate(grouping.groupholdercopy);
+                newOrb.transform.position = checkedPosition1;
+                newOrb.name = "zoi";
+                GameObject newOrb2 = Instantiate(grouping.groupholdercopy);
+                newOrb2.transform.position = checkedPosition2;
+                newOrb2.name = "zoi";
+
+                print("Y CHECKEDPOSITION1:" + checkedPosition1 + position);
+                print("Y CHECKEDPOSITION2:" + checkedPosition2 + position);
 
                 Collider[] intersecting = Physics.OverlapSphere(checkedPosition1, 0.01f);
 
@@ -157,15 +171,22 @@ public class BodyCreation : MonoBehaviour
         }
 
 
-        for (float xi = startingX; xi <= endingX + 1; xi++)
+        for (float xi = startingX + 1f; xi < endingX; xi++)
         {
-            for (float yi = startingY; yi <= endingY + 1; yi++)
+            for (float yi = startingY + 1f; yi < endingY; yi++)
             {
                 Vector3 checkedPosition1 = new Vector3(xi, yi, startingZ);
                 Vector3 checkedPosition2 = new Vector3(xi, yi, endingZ);
 
-                print("X CHECKEDPOSITION1:" + checkedPosition1);
-                print("X CHECKEDPOSITION2:" + checkedPosition2);
+                GameObject newOrb = Instantiate(grouping.groupholdercopy);
+                newOrb.transform.position = checkedPosition1;
+                newOrb.name = "zoi";
+                GameObject newOrb2 = Instantiate(grouping.groupholdercopy);
+                newOrb2.transform.position = checkedPosition2;
+                newOrb2.name = "zoi";
+
+                print("X CHECKEDPOSITION1:" + checkedPosition1 + position);
+                print("X CHECKEDPOSITION2:" + checkedPosition2 + position);
 
                 Collider[] intersecting = Physics.OverlapSphere(checkedPosition1, 0.01f);
 
@@ -234,23 +255,11 @@ public class BodyCreation : MonoBehaviour
                     continue;
                 }
             }
-            
+
             if (!usedUpBlocks.Contains(block))
             {
                 print("oia1");
                 yield return createBody(block);
-            }
-        }
-
-        foreach (GameObject bodyPart in bodyParts)
-        {
-            yield return new WaitForSeconds(0.1f);
-
-            GameObject turningMotor = bodyPart.GetComponent<GameObjectStorage>().storage;
-
-            if (turningMotor != null)
-            {
-                bodyPart.transform.SetParent(turningMotor.transform.GetChild(0).gameObject.GetComponent<GameObjectStorage>().storage.transform);
             }
         }
 
@@ -272,29 +281,45 @@ public class BodyCreation : MonoBehaviour
             ConfiguredPanel.transform.parent = BodiesContent.transform;
         }
         
+        
+        foreach (GameObject bodyPart in bodyParts)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            GameObject turningMotor = bodyPart.GetComponent<GameObjectStorage>().storage;
+
+            if (turningMotor != null)
+            {
+                bodyPart.transform.SetParent(turningMotor.transform.GetChild(0).gameObject.GetComponent<GameObjectStorage>().storage.transform);
+            }
+        }
+
     }
 
     motorDirection MotorFacing(GameObject motor, GameObject block)
     {
         print("hoboi" + motor.GetComponent<NumberStorage>().storage);
         Collider[] intersecting = Physics.OverlapSphere(motor.transform.position + motor.transform.forward, 0.01f);
+        Collider[] intersecting2 = Physics.OverlapSphere(motor.transform.position + (motor.transform.forward * -1), 0.01f);
+
+        print(motor.transform.position + motor.transform.forward + "in1");
+        print(motor.transform.position + (motor.transform.forward * -1) + "in2");
 
         if (intersecting.Length > 0)
         {
-            print("INTERSECTION1" + intersecting[0].gameObject.name);
             if (intersecting[0].gameObject == block)
             {
+                print("INTERSECTION1" + intersecting[0].gameObject.name);
                 return motorDirection.TOWARD;
             }
         }
 
-        Collider[] intersecting2 = Physics.OverlapSphere(motor.transform.position - motor.transform.forward, 0.01f);
 
         if (intersecting2.Length > 0)
         {
-            print("INTERSECTION2" + intersecting2[0].gameObject.name);
             if (intersecting2[0].gameObject == block)
             {
+                print("INTERSECTION2" + intersecting2[0].gameObject.name);
                 return motorDirection.BACKWARD;
             }
         }
@@ -304,7 +329,7 @@ public class BodyCreation : MonoBehaviour
         return motorDirection.NOT_FACING;
     }
 
-    void breakBodies()
+    public void breakBodies()
     {
 
         foreach (GameObject body in bodyParts)
@@ -313,6 +338,8 @@ public class BodyCreation : MonoBehaviour
         }
         bodyParts.Clear();
         bodies.Clear();
+        motorsList.Clear();
+        turningMotorList.Clear();
 
         //foreach (List<GameObject> body in bodies)
         //{
@@ -364,10 +391,10 @@ public class BodyCreation : MonoBehaviour
                 break;
             }
 
-            if (findAdjacents(queue[0]).Count == 0)
-            {
-                break;
-            }
+            //if (findAdjacents(queue[0]).Count == 0)
+            //{
+            //    break;
+            //}
 
             foreach (GameObject adjacent in findAdjacents(queue[0]))
             {
@@ -391,21 +418,29 @@ public class BodyCreation : MonoBehaviour
                                     print("addedmotor3");
                                     motors.Add(adjacent);
                                     body.Add(adjacent);
+                                    //queue.Add(adjacent);
                                     break;
                             }
                         }
                         else
                         {
+                            if (!usedUpBlocks.Contains(adjacent))
+                            {
+                                queue.Add(adjacent);
+                                body.Add(adjacent);
+                            }
 
-                            queue.Add(adjacent);
-                            body.Add(adjacent);
+                            
 
                         }
                     }
                     else
                     {
-                        queue.Add(adjacent);
-                        body.Add(adjacent);
+                        if (!usedUpBlocks.Contains(adjacent))
+                        {
+                            queue.Add(adjacent);
+                            body.Add(adjacent);
+                        }
                     }
                 }
             }
@@ -417,6 +452,7 @@ public class BodyCreation : MonoBehaviour
 
         if (body.Count() > 1)
         {
+            print("oia3");
             bodies.Add(new List<GameObject>(body));
             motorsList.Add(new List<GameObject>(motors));
             turningMotorList.Add(turningMotor);
@@ -425,15 +461,19 @@ public class BodyCreation : MonoBehaviour
                 usedUpBlocks.Add(usedupBlock);
             }
         }
+        else
+        {
+            usedUpBlocks.Add(origin);
+        }
 
 
 
 
         //foreach (GameObject bodyPart in body)
-        //{
-        //print("GROUPED ADJ");
-        //}
-        print("DONE ADJ");
+            //{
+            //print("GROUPED ADJ");
+            //}
+            print("DONE ADJ");
     }
     
 

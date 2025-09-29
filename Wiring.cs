@@ -15,11 +15,14 @@ public class Wiring : MonoBehaviour
     public float timePassed = 0f;
     public Vector3 forward;
 
+
     public GameObject orb;
     public void getConnection(GameObject electronicBlock, Boolean recursive)
     {
+
         //print("FF:" + listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].forwardFactor);
         //print("TYPE:" + listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].GetType());
+
         forward =
             electronicBlock.transform.forward
             * listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].forwardFactor
@@ -59,10 +62,19 @@ public class Wiring : MonoBehaviour
 
     }
 
-
+    public List<GameObject> orbs = new List<GameObject>();
+    public void clearWiring()
+    {
+        listOfParts.Clear();
+        foreach (GameObject orb in orbs)
+        {
+            Destroy(orb);
+        }
+    }
 
     public void addBlock(GameObject electronicBlock)
     {
+        print("ID NO WORK:" + electronicBlock.name);
         int ID = electronicBlock.GetComponent<NumberStorage>().storage;
 
         if (!listOfParts.ContainsKey(ID))
@@ -70,7 +82,8 @@ public class Wiring : MonoBehaviour
             GameObject newOrb = Instantiate(orb);
 
             newOrb.transform.parent = electronicBlock.transform;
-            newOrb.transform.position = electronicBlock.transform.up + electronicBlock.transform.position;
+            newOrb.transform.position = electronicBlock.transform.up * 2 + electronicBlock.transform.position;
+            orbs.Add(orb);
 
             ElectronicBase newBlock = new ElectronicBase();
 
@@ -113,7 +126,7 @@ public class Wiring : MonoBehaviour
                     listOfParts.Add(ID, newBlock);
                     break;
             }
-            
+
             newBlock.Block = electronicBlock;
             newBlock.WiringScript = this;
             newBlock.Orb = newOrb;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Motor : ElectronicBase
 {
-    public GameObject fullBody;
+     
 
     public Motor()
     {
@@ -13,6 +13,14 @@ public class Motor : ElectronicBase
     }
     public override bool Action()
     {
+        if (Power > 1f)
+        {
+            GameObject fullBody = Block.GetComponent<GameObjectStorage>().storage;
+            if (fullBody != null)
+            {
+                fullBody.transform.RotateAround(Block.transform.position, Vector3.up, 2 * Time.deltaTime);
+            }
+        }
         return true;
     }
     public override bool DistributePower()
