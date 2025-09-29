@@ -10,7 +10,6 @@ public class BodyCreation : MonoBehaviour
 
     public Creation creation;
 
-
     public Grouping grouping;
 
 

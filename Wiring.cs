@@ -16,9 +16,34 @@ public class Wiring : MonoBehaviour
     public Vector3 forward;
 
 
+    public int keycodeNum = 0;
+    public List<KeyCode> keycodes = new List<KeyCode>()
+    {
+        KeyCode.R,
+        KeyCode.T,
+        KeyCode.Y,
+        KeyCode.U,
+        KeyCode.I,
+        KeyCode.O,
+        KeyCode.P,
+        KeyCode.F,
+        KeyCode.G,
+        KeyCode.H,
+        KeyCode.J,
+        KeyCode.K,
+        KeyCode.Z,
+        KeyCode.X,
+        KeyCode.C,
+        KeyCode.V,
+        KeyCode.B,
+        KeyCode.N,
+        KeyCode.M,
+
+    };
     public GameObject orb;
     public void getConnection(GameObject electronicBlock, Boolean recursive)
     {
+        
 
         //print("FF:" + listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].forwardFactor);
         //print("TYPE:" + listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].GetType());
@@ -34,16 +59,24 @@ public class Wiring : MonoBehaviour
             GameObject intersector = intersecting[0].gameObject;
             if (intersector.name == "GroupHolder")
             {
-                intersector = intersecting[1].gameObject; 
+                intersector = intersecting[1].gameObject;
             }
             if (intersector != electronicBlock)
+            {
+                electronicBlock.GetComponent<GameObjectStorage>().storage = intersector;
+                addBlock(intersector);
+                listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].connections[0] = listOfParts[intersector.GetComponent<NumberStorage>().storage];
+
+                if (listOfParts[intersector.GetComponent<NumberStorage>().storage].ports[0] == null)
                 {
-                    electronicBlock.GetComponent<GameObjectStorage>().storage = intersector;
-                    addBlock(intersector);
-                    listOfParts[electronicBlock.GetComponent<NumberStorage>().storage].connections[0] = listOfParts[intersector.GetComponent<NumberStorage>().storage];
+                    listOfParts[intersector.GetComponent<NumberStorage>().storage].ports[0] = listOfParts[electronicBlock.GetComponent<NumberStorage>().storage];
+                }
+                else
+                {
+                    listOfParts[intersector.GetComponent<NumberStorage>().storage].ports[1] = listOfParts[electronicBlock.GetComponent<NumberStorage>().storage];
+                }
 
-
-                    switch (intersector.GetComponent<ElectronicType>().type)
+                switch (intersector.GetComponent<ElectronicType>().type)
                     {
                         case "Motor":
                             break;
@@ -56,13 +89,13 @@ public class Wiring : MonoBehaviour
                             }
                             break;
                     }
-                    //if (listOfParts[intersecting[0].gameObject.GetComponent<NumberStorage>().storage].propagate == "YES")
-                    //        {
-                    //            addBlock(intersecting[0].gameObject);
-                    //        }
+                //if (listOfParts[intersecting[0].gameObject.GetComponent<NumberStorage>().storage].propagate == "YES")
+                //        {
+                //            addBlock(intersecting[0].gameObject);
+                //        }
 
 
-                }
+            }
         }
 
     }
@@ -88,7 +121,7 @@ public class Wiring : MonoBehaviour
 
             newOrb.transform.parent = electronicBlock.transform;
             newOrb.transform.position = electronicBlock.transform.up * 2 + electronicBlock.transform.position;
-            orbs.Add(orb);
+            orbs.Add(newOrb);
 
             ElectronicBase newBlock = new ElectronicBase();
 
@@ -107,8 +140,10 @@ public class Wiring : MonoBehaviour
                     listOfParts.Add(ID, newBlock);
                     break;
                 case "NButton":
-                    newBlock = new NButton();
+        
+                    newBlock = new NButton(keycodes[keycodeNum]);
                     listOfParts.Add(ID, newBlock);
+                    keycodeNum += 1;
                     break;
                 case "Wire":
                     newBlock = new Wire();

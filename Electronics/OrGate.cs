@@ -6,7 +6,6 @@ using UnityEngine;
 public class OrGate : ElectronicBase
 {
 
-    public ElectronicBase[] ports = new ElectronicBase[2];
     public override bool Action()
     {
         if (CheckCondition())

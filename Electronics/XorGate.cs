@@ -6,7 +6,6 @@ using UnityEngine;
 public class XorGate : ElectronicBase
 {
 
-    public ElectronicBase[] ports = new ElectronicBase[2];
 
     public new float forwardFactor = 2f;
 

@@ -5,15 +5,23 @@ using UnityEngine;
 
 public class NButton : ElectronicBase
 {
+
+    public KeyCode keycode = KeyCode.Q;
+
+    public NButton(KeyCode givenKeycode)
+    {
+        keycode = givenKeycode;
+    }
+
     public override bool Action()
     {
-        if (WiringScript.GKD(KeyCode.G))
+        if (WiringScript.GKD(keycode))
         {
             SetTruePower(10f);
         }
         DistributePower();
         Orb.transform.position = Block.transform.position + Block.transform.up + Block.transform.up * (Power + 1) * 0.1f;
-        
+
         return true;
     }
 
